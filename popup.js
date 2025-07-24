@@ -1,4 +1,4 @@
-document.getElementById("convertBtn").addEventListener("click", function () {
+document.addEventListener("DOMContentLoaded", function () {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     var url = tabs[0].url;
     var issueKey = extractIssueKey(url);
@@ -6,7 +6,7 @@ document.getElementById("convertBtn").addEventListener("click", function () {
     if (issueKey) {
       var gitCommand = `git fetch && git checkout feature/${issueKey}`;
       copyToClipboard(gitCommand);
-      showMessage("Gitコマンドをクリップボードにコピーしました！", "success");
+      showMessage(gitCommand + "\n\nクリップボードにコピーしました！", "success");
     } else {
       showMessage("JiraのURLではありません。", "error");
     }
@@ -29,7 +29,7 @@ function copyToClipboard(text) {
   document.body.appendChild(dummy);
   dummy.value = text;
   dummy.select();
-  navigator.clipboard.writeText(text);
+  document.execCommand("copy");
   document.body.removeChild(dummy);
 }
 
@@ -37,8 +37,7 @@ function showMessage(text, className) {
   var message = document.getElementById("message");
   message.textContent = text;
   message.className = className;
-  message.style.display = "block";
   setTimeout(function () {
-    message.style.display = "none";
-  }, 2000);
+    window.close();
+  }, 1500);
 }
