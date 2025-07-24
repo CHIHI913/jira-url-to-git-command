@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Jira URL to Git Command",
+  "version": "1.0",
+  "description": "Jiraのイシュー URL から Git コマンドを生成",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
